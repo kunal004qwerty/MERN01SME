@@ -1,6 +1,6 @@
 import * as dotenv from "dotenv";
 dotenv.config();
-console.log(process.env.MONGOOS_URL);
+// console.log(process.env.MONGOOS_URL);
 
 import express from "express";
 import mongoose from "mongoose";
@@ -17,7 +17,7 @@ const __filename = fileURLToPath(import.meta.url);
 const app = express();
 
 const __dirname = path.dirname(__filename);
-console.log("directory-name 👉️", __dirname);
+// console.log("directory-name 👉️", __dirname);
 
 // STAIC FILES
 
