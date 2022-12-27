@@ -23,7 +23,7 @@ console.log("directory-name 👉️", __dirname);
 
 app.use(express.static(path.join(__dirname, "./client/build")));
 
-app.get("*", (req, res) => {
+app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 //! -------------------------
@@ -40,11 +40,29 @@ app.use("/api/users", userRoute);
 
 // !------MONGO_DB CONNECTION
 mongoose.set("strictQuery", false);
-mongoose
-  .connect(MONGOOS_ATLES_URL, { useNewUrlParser: true })
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`SERVER running on PORT http://localhost:${PORT}/`);
+
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(MONGOOS_ATLES_URL, {
+      useNewUrlParser: true,
     });
-  })
-  .catch((error) => console.log(error.message));
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+};
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`SERVER running on PORT http://localhost:${PORT}/`);
+  });
+});
+
+// mongoose
+//   .connect(MONGOOS_ATLES_URL, { useNewUrlParser: true })
+//   .then(() => {
+//     app.listen(PORT, () => {
+//       console.log(`SERVER running on PORT http://localhost:${PORT}/`);
+//     });
+//   })
+//   .catch((error) => console.log(error.message));
